@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using WebApi.Data;
 using WebApi.Extensions;
 using WebApi.Interfaces;
+using WebApi.Middleware;
 using WebApi.Services;
 
 namespace WebApi;
@@ -27,6 +28,7 @@ public class Program
         }
 
         // Configure the HTTP request pipeline
+        app.UseMiddleware<ExceptionMiddleware>();
         app.UseCors(x => x
             .AllowAnyHeader()
             .AllowAnyMethod()

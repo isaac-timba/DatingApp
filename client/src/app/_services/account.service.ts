@@ -18,11 +18,15 @@ export class AccountService {
       .pipe(tap(
         user => {
           if (user) {
-            localStorage.setItem('user', JSON.stringify(user));
-            this.currentUser.set(user);
+            this.setCurrentUser(user);
           }
         }
       ));
+  }
+
+  setCurrentUser(user: User) {
+    localStorage.setItem('user', JSON.stringify(user));
+    this.currentUser.set(user);
   }
 
   login(model: any): Observable<User> {
@@ -30,8 +34,7 @@ export class AccountService {
       .pipe(tap(
         user => {
           if (user) {
-            localStorage.setItem('user', JSON.stringify(user));
-            this.currentUser.set(user);
+            this.setCurrentUser(user);
           }
         }
       ));

@@ -83,7 +83,7 @@
           </form>
         </tab>
         <tab heading="Edit Photos">
-          <p>Photo edit</p>
+          <app-photo-editor [member]="member" (memberChange)="onMemberChange($event)"/>
         </tab>
       </tabset>
     </div>

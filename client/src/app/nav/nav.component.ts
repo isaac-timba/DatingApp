@@ -4,7 +4,7 @@ import {AccountService} from '../_services/account.service';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {Router, RouterLink, RouterLinkActive} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
-import {TitleCasePipe} from '@angular/common';
+import {NgOptimizedImage, TitleCasePipe} from '@angular/common';
 
 @Component({
   selector: 'app-nav',
@@ -14,7 +14,8 @@ import {TitleCasePipe} from '@angular/common';
     BsDropdownModule,
     RouterLink,
     RouterLinkActive,
-    TitleCasePipe
+    TitleCasePipe,
+    NgOptimizedImage
   ],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css'

@@ -15,7 +15,7 @@ export class BusyService {
       type: 'fire',
       bdColor: 'rgba(255,255,255,0)',
       color: '#333333'
-    })
+    });
   }
 
   idle() {

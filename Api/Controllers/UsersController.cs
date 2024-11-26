@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.DTOs;
@@ -65,6 +64,8 @@ public class UsersController(IUserRepository userRepository, IMapper mapper, IPh
             Url = result.SecureUrl.AbsoluteUri,
             PublicId = result.PublicId
         };
+
+        if (user.Photos.Count == 0) photo.IsMain = true;
 
         user.Photos.Add(photo);
 

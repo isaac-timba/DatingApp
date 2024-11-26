@@ -7,6 +7,7 @@ import {environment} from '../../../environments/environment';
 import {MembersService} from '../../_services/members.service';
 import {Photo} from '../../_models/photo';
 import {tap} from 'rxjs';
+import {BusyService} from '../../_services/busy.service';
 
 @Component({
   selector: 'app-photo-editor',
@@ -32,6 +33,7 @@ export class PhotoEditorComponent implements OnInit {
 
   private accountService: AccountService = inject(AccountService);
   private memberService: MembersService = inject(MembersService);
+  private busyService: BusyService = inject(BusyService);
 
   ngOnInit(): void {
     this.initializeUploader();
@@ -80,11 +82,24 @@ export class PhotoEditorComponent implements OnInit {
 
     this.uploader.onAfterAddingFile = file => file.withCredentials = false;
 
+    this.uploader.onProgressAll = (progress) => this.busyService.busy();
+
     this.uploader.onSuccessItem = (item, response, status, headers) => {
       const photo = JSON.parse(response);
       const updatedMember = {...this.member()}
       updatedMember.photos.push(photo);
+
+      if (photo.isMain) {
+        const user = this.accountService.currentUser();
+        if (user) {
+          user.photoUrl = photo.url;
+          this.accountService.currentUser.set(user);
+          updatedMember.photoUrl = photo.url;
+          updatedMember.photos.forEach(p => p.isMain = p.id === photo.id);
+        }
+      }
       this.memberChange.emit(updatedMember);
+      this.busyService.idle();
     };
   }
 }
